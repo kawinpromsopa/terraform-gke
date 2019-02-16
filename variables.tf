@@ -1,48 +1,83 @@
-##################
-# Public Variables
-##################
+######################
+# GCP Public Variables
+######################
 
-variable "project" {
+variable "project_name" {
   # Name of project ID!
   default = "terraform-kubernetes-231903"
 }
 
 variable "region" {
-  default = "asia-southeast1-a"
+  description = "Region of resources"
+  default     = "asia-southeast1"
 }
 
-variable "cluster_name" {
-  default = "gke-k8s-cluster"
+variable "name" {
+  # Terraform Workspace envoroiment!
+  default = {
+  description = "Name for vpc"
+    prod     = "prod"
+    staging  = "staging"
+  }
 }
 
-variable "cluster_zone" {
-  default = "asia-southeast1-a"
+###################
+# Network variables
+###################
+
+variable "subnet_cidr" {
+  default = {
+  description = "Subnet range"
+
+    prod       = "10.10.0.0/24"
+    staging    = "10.240.0.0/24"
+  }
 }
 
-variable "cluster_k8s_version" {
-  default = "1.9.7-gke.3"
-}
+######################
+# GKE Public variables
+######################
 
-variable "initial_node_count" {
-  default = 2
-}
-
-#variable "autoscaling_min_node_count" {
-#  default = 1
+#variable "min_master_version" {
+#  description = "Number of nodes in each GKE cluster zone"
+#  default     = "1.10.7-gke.6"
 #}
 
-#variable "autoscaling_max_node_count" {
-#  default = 2
+#variable "node_version" {
+#  description = "Number of nodes in each GKE cluster zone"
+#  default     = "1.10.7-gke.6"
 #}
 
-variable "disk_size_gb" {
-  default = 30
+variable "gke_num_nodes" {
+  default = {
+  description = "Number of nodes in each GKE cluster zone"
+
+    prod     = 2
+    staging  = 1
+  }
 }
 
-variable "disk_type" {
-  default = "pd-standard"
+variable "gke_master_user" {
+  description = "Username to authenticate with the k8s master"
+  default     = "k8s_admin"
 }
 
-variable "machine_type" {
-  default = "n1-standard-1"
+variable "gke_master_pass" {
+  # Value neede to create! (*Must to be 15 Charecter!)
+  description = "Username to authenticate with the k8s master"
+  default     = ""
+}
+
+variable "gke_node_machine_type" {
+  default     = "n1-standard-1"
+  description = "Machine type of GKE nodes"
+}
+
+variable gke_label {
+  default = {
+  description = "label"
+
+    prod      = "prod"
+    staging   = "staging"
+  }
 }

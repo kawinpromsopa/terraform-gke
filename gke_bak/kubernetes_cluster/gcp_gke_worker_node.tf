@@ -14,10 +14,11 @@
 # Google Kubernetes Engine Cluster
 ##################################
 
-resource "google_container_cluster" "cluster" {
-  name               = "${var.cluster_name}"
-  zone               = "${var.cluster_zone}"
-#  min_master_version = "${var.cluster_k8s_version}"
+resource "google_container_cluster" "gke-k8s-cluster-primary" {
+  name                   = "${var.cluster_name}"
+  zone                   = "${var.cluster_zone}"
+#  additional_zones       = ["asia-southeast1-a", "asia-southeast1-b", "asia-southeast1-c"]
+#  min_master_version     = "${var.cluster_k8s_version}"
 
   addons_config {
     network_policy_config {
@@ -70,26 +71,7 @@ resource "google_container_cluster" "cluster" {
   }
 }
 
-#########
-# Output
-#########
-
-output "client_certificate" {
-  value = "${google_container_cluster.cluster.master_auth.0.client_certificate}"
-  sensitive = true
-}
-
-output "client_key" {
-  value = "${google_container_cluster.cluster.master_auth.0.client_key}"
-  sensitive = true
-}
-
-output "cluster_ca_certificate" {
-  value = "${google_container_cluster.cluster.master_auth.0.cluster_ca_certificate}"
-  sensitive = true
-}
-
-output "host" {
-  value = "${google_container_cluster.cluster.endpoint}"
-  sensitive = true
-}
+#resource "google_compute_project_metadata_item" "ssh-keys" {
+#  key   = "ssh-keys"
+#  value = "${var.public_key}"
+#}
