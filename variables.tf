@@ -1,8 +1,10 @@
-###
+##################
 # Public Variables
-###
+##################
+
 variable "project" {
-  default = "gke-k8s-tf"
+  # Name of project ID!
+  default = "terraform-kubernetes-231903"
 }
 
 variable "region" {
@@ -34,7 +36,7 @@ variable "initial_node_count" {
 #}
 
 variable "disk_size_gb" {
-  default = 50
+  default = 30
 }
 
 variable "disk_type" {

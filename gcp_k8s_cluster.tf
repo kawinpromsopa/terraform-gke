@@ -1,6 +1,19 @@
-###
-# GKE Cluster
-###
+##############################
+# Google Cloud Storage Backend
+##############################
+
+#terraform {
+#  backend "gcs" {
+#    bucket  = "aboutopsio-terraform-state-staging"
+#    path    = "gcp/terraform.tfstate"
+#    project = "Kubernetes-mongodb"
+#  }
+#}
+
+##################################
+# Google Kubernetes Engine Cluster
+##################################
+
 resource "google_container_cluster" "cluster" {
   name               = "${var.cluster_name}"
   zone               = "${var.cluster_zone}"
@@ -57,9 +70,9 @@ resource "google_container_cluster" "cluster" {
   }
 }
 
-###
-# Output for K8S
-###
+#########
+# Output
+#########
 
 output "client_certificate" {
   value = "${google_container_cluster.cluster.master_auth.0.client_certificate}"
