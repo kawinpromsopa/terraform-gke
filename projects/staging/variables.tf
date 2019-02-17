@@ -81,3 +81,61 @@ variable gke_label {
     staging   = "staging"
   }
 }
+
+####################
+# CloudSQL variables
+####################
+
+variable "availability_type" {
+  default = {
+  description = "Availability type for HA"
+
+    prod      = "REGIONAL"
+    staging   = "ZONAL"
+  }
+}
+
+variable "sql_instance_size" {
+  description = "Size of Cloud SQL instances"
+  default     = "db-f1-micro"
+}
+
+variable "sql_disk_type" {
+  description = "Cloud SQL instance disk type"
+  default     = "PD_SSD"
+}
+
+variable "sql_disk_size" {
+  description = "Storage size in GB"
+  default     = "10"
+}
+
+variable "sql_require_ssl" {
+  description = "Enforce SSL connections"
+  default     = "false"
+}
+
+variable "sql_master_zone" {
+  description = "Zone of the Cloud SQL master (a, b, ...)"
+  default     = "a"
+}
+
+variable "sql_replica_zone" {
+  description = "Zone of the Cloud SQL replica (a, b, ...)"
+  default     = "b"
+}
+
+variable "sql_connect_retry_interval" {
+  description = "The number of seconds between connect retries."
+  default     = 60
+}
+
+variable "sql_user" {
+  description = "Username of the host to access the database"
+  default     = "admin"
+}
+
+variable "sql_pass" {
+  description = "Password of the host to access the database"
+  default     = "password"
+}

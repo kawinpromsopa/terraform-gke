@@ -38,3 +38,18 @@ module "gke" {
   gke_node_machine_type = "${var.gke_node_machine_type}"
   gke_label             = "${var.gke_label}"
 }
+
+module "cloudsql" {
+  source                     = "../../modules/gce_cloudsql"
+  region                     = "${var.region}"
+  availability_type          = "${var.availability_type}"
+  sql_instance_size          = "${var.sql_instance_size}"
+  sql_disk_type              = "${var.sql_disk_type}"
+  sql_disk_size              = "${var.sql_disk_size}"
+  sql_require_ssl            = "${var.sql_require_ssl}"
+  sql_master_zone            = "${var.sql_master_zone}"
+  sql_connect_retry_interval = "${var.sql_connect_retry_interval}"
+  sql_replica_zone           = "${var.sql_replica_zone}"
+  sql_user                   = "${var.sql_user}"
+  sql_pass                   = "${var.sql_pass}"
+}
