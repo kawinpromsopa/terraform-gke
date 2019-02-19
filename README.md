@@ -3,7 +3,7 @@
 - gcloud config set project `<PROJECT_ID>`
 - gcloud config set compute/zone `<COMPUTE_ZONE>`
 
-### Get our the Credentials keys
+### Get your the Credentials keys
 * https://cloud.google.com/video-intelligence/docs/common/auth
 
 ### Enable API Service your project : GCE
@@ -15,7 +15,7 @@
 ### Enable API Service : CloudSQL Admin
 * https://console.developers.google.com/apis/api/sqladmin.googleapis.com/overview?project=89203834305
 
-### First step : You must to export the `credentials` keys, To and download with .json file!
+### First step :Download `credentials` keys with `.json` file, And must to export the `credentials` keys,
 
 * example : `export GOOGLE_APPLICATION_CREDENTIALS=<path/to/credentials.json>`
 
