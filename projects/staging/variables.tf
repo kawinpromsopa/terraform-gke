@@ -4,7 +4,7 @@
 
 variable "project_name" {
   # Name of project ID!
-  default = "terraform-kubernetes-231903"
+  default = "terraform-kubernetes-232216"
 }
 
 variable "region" {

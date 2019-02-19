@@ -1,65 +1,82 @@
-## Deploy Google kubernetes Engine with Terraform
+## Deploy Google kubernetes Engine (GKE), Google Cloud Compute (GCE), Google Cloud SQL with Terraform!
+
+* Get your the Credentials keys.
 ```
-- gcloud config set project <PROJECT_ID>
-- gcloud config set compute/zone <COMPUTE_ZONE>
+https://cloud.google.com/video-intelligence/docs/common/auth
 ```
 
-* Get your the Credentials keys
-```
-* https://cloud.google.com/video-intelligence/docs/common/auth
-```
+### Ensure your enable APIs & Services for `GKE`, `GCE`, `CloudSQL`, `Network API`
 
-* Enable API Service your project : GCE
+* First step: After download the `credentials keys` with `.json` file, You must to export with this.
 ```
-https://console.cloud.google.com/apis/library/compute.googleapis.com?q=cloud%20compute&id=a08439d8-80d6-43f1-af2e-6878251f018d&project=terraform-kubernetes-231903&folder&organizationId
-```
-
-* Enable API Service : GKE 
-```
-https://console.cloud.google.com/apis/library/container.googleapis.com?q=kuber&id=1def4230-f361-4931-b386-576c62b90799&project=terraform-kubernetes-231903&folder&organizationId
-```
-
-* Enable API Service : CloudSQL Admin
-```
-https://console.developers.google.com/apis/api/sqladmin.googleapis.com/overview?project=89203834305
-```
-
-* First step: Download your `credentials` keys with `.json` file, And must to export the this.
-```
-* example : `export GOOGLE_APPLICATION_CREDENTIALS=<path/to/credentials.json>`
+* example : `export GOOGLE_APPLICATION_CREDENTIALS=<PATH/TO/CRENDENTIALS.json>`
 ```
 
 * Second step: Basiclly terraform can deployment with workspace!
 ##### In location `prod` or `staging` Directory env, You must to create your workspace with following:
 ```
 terraform init
-terraform workspace new <prod or staging>
+terraform workspace new <PROD or STAGING>
+terraform workspace select <PROD or STAGING>
 ```
 * example `terraform workspace new staging`
-* `Note` The workspace <prod> or <staging> needed to sperate resources envoroiment
+* NOTE: The workspace `prod` or `staging` our needed to sperate resources envoroiment.
 
-* Third step:  update soon!
+* Third step: Deployment 
+```
+terraform apply -auto-approve
+```
 
-## Connect GKE with kubectl
+### Connect The Google kubernetes cluster with `kubectl`
 
 * Update component
 ```
 gcloud components update
 ```
 
+* Select your project
+```
+gcloud config set project <PROJECT_ID>
+gcloud config set compute/zone <COMPUTE_ZONE>
+```
+
 * Generating a kubeconfig entry
 ```
-gcloud container clusters get-credentials <your_cluster_gke_name>
+gcloud container clusters get-credentials <YOUR_GKE_CLUSTER_NAME>
 ```
-* example `gcloud container clusters get-credentials kubernetes-cluster`
+* example `gcloud container clusters get-credentials gke-staging-cluster`
 
 * Show gke node list
 ```
 kubectl get nodes
 ```
-##### Ref : https://cloud.google.com/kubernetes-engine/docs/how-to/cluster-access-for-kubectl
 
-* Connect to CloudSQL 
+### Create the crendentials key for Applications connect to CloudSQL with CloudSQL-Proxy
 ```
-* `psql "sslmode=disable dbname=postgres user=<user> hostaddr=<ip_adreess>"
+kubectl create secret generic cloudsql-instance-credentials \
+--from-file=<PATH/TO/CRENDENTIALS.json>
+
+kubectl create secret generic cloudsql-db-credentials \
+--from-literal=username=<USER> --from-literal=password=<PASSWORD>
+```
+
+### Testing deployment wordpress connect to CloudSQL
+
+* Create database
+```
+gcloud sql databases create <DB_NAME> --instance=<CLOUDSQL_NAME>
+```
+
+```
+kubectl apply -f wordpress_cloudsql_deployment.yaml
+kubectl describe deployment wordpress
+kubectl logs -l app=wordpress -c web
+kubectl logs -l app=wordpress -c cloudsql-proxy
+kubectl expose deployment wordpress --type=LoadBalancer
+kubectl get svc
+```
+
+* Connect CloudSQL with `psql-cli`
+```
+* `psql "sslmode=disable dbname=postgres user=<USER> hostaddr=<IP_ADDRESS>"
 ```

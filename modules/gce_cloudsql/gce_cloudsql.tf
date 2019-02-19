@@ -7,7 +7,7 @@ resource "google_sql_database_instance" "master" {
 #  name             = "sql-${terraform.workspace}-master"
   name             = "${random_id.id.hex}"
   region           = "${var.region}"
-  database_version = "POSTGRES_9_6"
+  database_version = "MYSQL_5_6"
 
   settings {
     availability_type = "${var.availability_type[terraform.workspace]}"
@@ -45,7 +45,7 @@ resource "google_sql_database_instance" "replica" {
   name                 = "metest-${terraform.workspace}-replica"
   count                = "${terraform.workspace == "prod" ? 1 : 0}"
   region               = "${var.region}"
-  database_version     = "POSTGRES_9_6"
+  database_version     = "MYSQL_5_6"
   master_instance_name = "${google_sql_database_instance.master.name}"
 
   settings {
