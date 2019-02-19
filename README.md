@@ -6,6 +6,15 @@
 ### Get our the Credentials keys
 * https://cloud.google.com/video-intelligence/docs/common/auth
 
+### Enable API Service your project : GCE
+* https://console.cloud.google.com/apis/library/compute.googleapis.com?q=cloud%20compute&id=a08439d8-80d6-43f1-af2e-6878251f018d&project=terraform-kubernetes-231903&folder&organizationId
+
+### Enable API Service : GKE 
+* https://console.cloud.google.com/apis/library/container.googleapis.com?q=kuber&id=1def4230-f361-4931-b386-576c62b90799&project=terraform-kubernetes-231903&folder&organizationId
+
+### Enable API Service : CloudSQL Admin
+* https://console.developers.google.com/apis/api/sqladmin.googleapis.com/overview?project=89203834305
+
 ### First step : You must to export the `credentials` keys, To and download with .json file!
 
 * example : `export GOOGLE_APPLICATION_CREDENTIALS=<path/to/credentials.json>`
@@ -16,20 +25,11 @@
 * `terraform init`
 * `terraform workspace new <prod or staging>`
 
-* example `terraform workspace new <staging>`
+* example `terraform workspace new staging`
 
-##### Note* The workspace <prod> or <staging> has to sperate resources envoroiment
+* Note* The workspace <prod> or <staging> needed to sperate resources envoroiment
 
-### Third step :  
-
-### Enable API Service your project : GCE
-* https://console.cloud.google.com/apis/library/compute.googleapis.com?q=cloud%20compute&id=a08439d8-80d6-43f1-af2e-6878251f018d&project=terraform-kubernetes-231903&folder&organizationId
-
-### Enable API Service : GKE 
-* https://console.cloud.google.com/apis/library/container.googleapis.com?q=kuber&id=1def4230-f361-4931-b386-576c62b90799&project=terraform-kubernetes-231903&folder&organizationId
-
-### Enable API Service : CloudSQL Admin
-* https://console.developers.google.com/apis/api/sqladmin.googleapis.com/overview?project=89203834305
+### Third step :  update soon!
 
 ## Connect GKE with kubectl
 
@@ -45,7 +45,7 @@
 
 * `kubectl get nodes`
 
-###### Ref : `https://cloud.google.com/kubernetes-engine/docs/how-to/cluster-access-for-kubectl`
+###### Ref : https://cloud.google.com/kubernetes-engine/docs/how-to/cluster-access-for-kubectl
 
 
 ### Connect to CloudSQL 
