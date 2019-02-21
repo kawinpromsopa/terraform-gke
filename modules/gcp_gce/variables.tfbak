@@ -1,0 +1,23 @@
+##############
+GCE Variabeles
+##############
+
+variable "instance_type" {
+  default = "f1-micro"
+}
+
+variable "zone" {
+  default = "asia-southeast1"
+}
+
+variable "image_name" {
+  default = "ubuntu-1604-lts"
+}
+
+variable "ssh_user" {
+  default = "root"
+}
+
+variable "ssh_pub_key_file" {
+  default = "~/.ssh/id_rsa.pub"
+}

@@ -15,22 +15,24 @@ module "vpc" {
 module "subnet" {
   source      = "../../modules/gce_subnet"
   region      = "${var.region}"
-  vpc_name     = "${module.vpc.vpc_name}"
+  vpc_name    = "${module.vpc.vpc_name}"
   subnet_cidr = "${var.subnet_cidr}"
 }
 
 module "firewall" {
-  source           = "../../modules/gce_firewall"
-  vpc_name         = "${module.vpc.vpc_name}"
-  ip_cidr_range    = "${module.subnet.ip_cidr_range}"
+  source        = "../../modules/gce_firewall"
+  vpc_name      = "${module.vpc.vpc_name}"
+  ip_cidr_range = "${module.subnet.ip_cidr_range}"
 }
 
 module "gke" {
-  source                = "../../modules/gce_gke"
-  region                = "${var.region}"
-#  min_master_version    = "${var.min_master_version}"
-#  node_version          = "${var.node_version}"
-  gke_num_nodes         = "${var.gke_num_nodes}"
+  source = "../../modules/gce_gke"
+  region = "${var.region}"
+
+  #  min_master_version    = "${var.min_master_version}"
+  #  node_version          = "${var.node_version}"
+  gke_num_nodes = "${var.gke_num_nodes}"
+
   vpc_name              = "${module.vpc.vpc_name}"
   subnet_name           = "${module.subnet.subnet_name}"
   gke_master_user       = "${var.gke_master_user}"
@@ -52,4 +54,12 @@ module "cloudsql" {
   sql_replica_zone           = "${var.sql_replica_zone}"
   sql_user                   = "${var.sql_user}"
   sql_pass                   = "${var.sql_pass}"
+}
+
+module "gce" {
+  source      = "../../modules/gcp_gce"
+  region      = "${var.region}"
+  vpc_name    = "${module.vpc.vpc_name}"
+  subnet_name = "${module.subnet.subnet_name}"
+  gke_label   = "${var.gke_label}"
 }

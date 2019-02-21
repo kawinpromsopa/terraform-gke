@@ -109,3 +109,14 @@ variable "sql_pass" {
   description = "Password of the host to access the database"
   default     = "password"
 }
+
+variable "machine_type" {
+  description = "Machine type of GCE nodes"
+  default = "n1-standard-1"
+}
+
+# k8s variables
+variable gke_label {
+  type        = "map"
+  description = "label"
+}

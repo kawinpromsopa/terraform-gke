@@ -15,9 +15,9 @@ variable "region" {
 variable "name" {
   # Terraform Workspace envoroiment!
   default = {
-  description = "Name for vpc"
-    prod     = "prod"
-    staging  = "staging"
+    description = "Name for vpc"
+    prod        = "prod"
+    staging     = "staging"
   }
 }
 
@@ -27,10 +27,10 @@ variable "name" {
 
 variable "subnet_cidr" {
   default = {
-  description = "Subnet range"
+    description = "Subnet range"
 
-    prod       = "10.10.0.0/24"
-    staging    = "10.240.0.0/24"
+    prod    = "10.10.0.0/24"
+    staging = "10.240.0.0/24"
   }
 }
 
@@ -50,10 +50,10 @@ variable "subnet_cidr" {
 
 variable "gke_num_nodes" {
   default = {
-  description = "Number of nodes in each GKE cluster zone"
+    description = "Number of nodes in each GKE cluster zone"
 
-    prod     = 2
-    staging  = 1
+    prod    = 2
+    staging = 1
   }
 }
 
@@ -75,10 +75,10 @@ variable "gke_node_machine_type" {
 
 variable gke_label {
   default = {
-  description = "label"
+    description = "label"
 
-    prod      = "prod"
-    staging   = "staging"
+    prod    = "prod"
+    staging = "staging"
   }
 }
 
@@ -88,10 +88,10 @@ variable gke_label {
 
 variable "availability_type" {
   default = {
-  description = "Availability type for HA"
+    description = "Availability type for HA"
 
-    prod      = "REGIONAL"
-    staging   = "ZONAL"
+    prod    = "REGIONAL"
+    staging = "ZONAL"
   }
 }
 
@@ -138,4 +138,27 @@ variable "sql_user" {
 variable "sql_pass" {
   description = "Password of the host to access the database"
   default     = "password"
+}
+
+##############
+GCE Variabeles variable "instance_type" {
+  ##############
+
+  default = "f1-micro"
+}
+
+variable "zone" {
+  default = "asia-southeast1"
+}
+
+variable "image_name" {
+  default = "ubuntu-1604-lts"
+}
+
+variable "ssh_user" {
+  default = "root"
+}
+
+variable "ssh_pub_key_file" {
+  default = "~/.ssh/id_rsa.pub"
 }

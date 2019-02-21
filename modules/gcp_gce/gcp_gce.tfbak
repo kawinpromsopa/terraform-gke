@@ -1,0 +1,46 @@
+resource "google_compute_instance" "mongodb" {
+  name         = "monngodb"
+  machine_type = "${var.instance_type}"
+  zone         = "${var.zone}"
+
+  boot_disk {
+    initialize_params {
+      image = "${var.image_name}"
+      size  = 100
+    }
+  }
+
+  metadata {
+    sshKeys = "${var.ssh_user}:${file(var.ssh_pub_key_file)}"
+  }
+
+  network_interface {
+    network       = "${google_compute_network.backend.name}"
+    access_config = {}
+  }
+
+  service_account {
+    scopes = ["https://www.googleapis.com/auth/compute.readonly",
+              "https://www.googleapis.com/auth/devstorage.read_only",
+              "https://www.googleapis.com/auth/logging.write",
+              "https://www.googleapis.com/auth/monitoring",]
+  }
+}
+
+resource "google_compute_network" "backennd" {
+  name = "backennd-network"
+}
+
+
+resource "google_compute_firewall" "common" {
+  name    = "common-firewall"
+  network = "${google_compute_network.backend.name}"
+
+  allow {
+    protocol = "tcp"
+    ports    = ["22",]
+  }
+
+  source_ranges = ["0.0.0.0/0"]
+#  target_tags   = ["mongodb"]
+}
